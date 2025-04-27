@@ -1,0 +1,67 @@
+It is a conceptual and logical model that defines the network communication between a system
+in order to communicate with another system
+
+Think of it as two computers commununicate they utilze OSI Model.
+
+
+OSI MODEL (Open Systems Interconnection)
+=========================================
+
+Definition:
+-----------
+The OSI Model is a conceptual framework used to understand and design how data is transmitted across a network. It breaks the process into 7 abstract layers.
+
+LAYERS OF THE OSI MODEL (Top to Bottom)
+----------------------------------------
+
+7. Application Layer
+---------------------
+- Closest to the end-user.
+- Interfaces directly with software applications.
+- Handles network services like email, file transfer, and browsing.
+- Examples: HTTP, FTP, SMTP, DNS, POP3
+
+6. Presentation Layer
+----------------------
+- Ensures data is in a readable format for the Application Layer.
+- Handles data translation, encryption/decryption, and compression.
+- Think of it as the “translator” of the network.
+
+5. Session Layer
+-----------------
+- Manages sessions or connections between two applications.
+- Responsible for establishing, maintaining, and terminating sessions.
+- Handles authentication and session recovery.
+
+4. Transport Layer
+-------------------
+- Ensures reliable data transmission between devices.
+- Performs error checking and data flow control.
+- Segments and reassembles data.
+- Protocols: TCP (reliable), UDP (faster but unreliable)
+
+3. Network Layer
+-----------------
+- Responsible for routing, addressing, and delivering data between networks.
+- Handles logical addressing (IP addresses).
+- Decides the best physical path (routing).
+- Protocols: IP, ICMP, ARP, BGP, OSPF
+
+2. Data Link Layer
+-------------------
+- Deals with node-to-node data transfer.
+- Handles MAC addresses, error detection/correction (not correction in all cases), and frame synchronization.
+- Protocols: Ethernet, PPP, HDLC
+
+1. Physical Layer
+------------------
+- The lowest layer — responsible for transmitting raw bits over the medium.
+- Deals with cables, switches, voltages, pin layout, and signaling.
+- No understanding of the actual data; only 0s and 1s.
+
+MEMORY AID:
+-----------
+All People Seem To Need Data Processing  
+(A-P-S-T-N-D-P — top to bottom)
+
+

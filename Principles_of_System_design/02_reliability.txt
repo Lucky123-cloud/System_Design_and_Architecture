@@ -1,0 +1,77 @@
+CALCULATING RELIABILITY
+========================
+
+Key Metrics:
+------------
+1. MTBF (Mean Time Between Failures): average time the system runs before it fails.
+2. MTTR (Mean Time To Repair): average time it takes to fix the system after a failure.
+
+Formula:
+--------
+Reliability ≈ MTBF / (MTBF + MTTR)
+
+Example Scenario:
+-----------------
+Let’s say you have a system with the following stats:
+- MTBF = 900 hours
+- MTTR = 100 hours
+
+Step 1: Plug into the formula.
+
+Reliability = 900 / (900 + 100)
+            = 900 / 1000
+            = 0.9
+
+Step 2: Convert to percentage.
+
+Reliability = 90%
+
+This means the system is expected to function correctly **90% of the time**, and 10% of the time it will either be down or recovering from a failure.
+
+Another Example (More Reliable System):
+---------------------------------------
+- MTBF = 3600 hours
+- MTTR = 40 hours
+
+Reliability = 3600 / (3600 + 40)
+            = 3600 / 3640
+            ≈ 0.989
+            ≈ **98.9% Reliable**
+
+Interpretation:
+---------------
+- A higher MTBF (more time between failures) and lower MTTR (faster recovery) leads to higher reliability.
+- Reliability is about **correct operation over time**, not just being "up."
+
+
+
+
+ANOTHER WAY OF CALCULATING RELIABILITY
+=======================================
+
+Mean Time Between Failures (MTBF)
+---------------------------------
+MTBF = Total Time in Service / Number of Failures
+
+Example:
+--------
+- Total time in service = 300 hours
+- Number of failures = 5
+
+MTBF = 300 / 5 = 60 hours
+
+Interpretation:
+---------------
+This means the system, on average, runs for **60 hours** before a failure occurs.
+So, there is likely to be a **reliability issue every 60 hours** of operation.
+
+Note:
+-----
+This method assumes:
+- Past performance is a reasonable predictor of future performance
+- Failures are randomly distributed
+
+You can combine this MTBF value with MTTR to calculate overall **system reliability** using:
+
+  Reliability = MTBF / (MTBF + MTTR)
+

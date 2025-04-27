@@ -1,0 +1,56 @@
+transmission control Protocols/Internet Protocols
+OSI is for any two devices, whereas TCP/IP is for onlu the internet.
+
+TCP/IP MODEL
+============
+
+Definition:
+-----------
+The TCP/IP model (also called the Internet Protocol Suite) is a practical framework used in real-world networking, especially the internet. It has **4 layers** instead of 7 (as in the OSI model).
+
+LAYERS OF THE TCP/IP MODEL (Top to Bottom)
+------------------------------------------
+
+4. Application Layer
+---------------------
+- Combines the OSI model’s Application, Presentation, and Session layers.
+- Handles all high-level protocols and data formatting for apps.
+- Examples: HTTP, FTP, SMTP, DNS, Telnet
+
+3. Transport Layer
+-------------------
+- Responsible for end-to-end communication and error handling.
+- Manages data segmentation, flow control, and reliability.
+- Protocols: TCP (reliable), UDP (faster, no guarantee)
+
+2. Internet Layer
+------------------
+- Handles logical addressing and routing.
+- Moves packets across different networks (internetworking).
+- Protocols: IP (v4/v6), ICMP, ARP, IGMP
+
+1. Network Access Layer (Link Layer)
+-------------------------------------
+- Covers both the OSI’s Data Link and Physical layers.
+- Deals with how data is physically transmitted (e.g., cables, Wi-Fi).
+- Includes MAC addresses, frame formatting, and hardware-level delivery.
+
+COMPARISON: TCP/IP vs OSI Model
+-------------------------------
+
+| OSI Model          | TCP/IP Model          |
+|--------------------|------------------------|
+| Application        | Application            |
+| Presentation       |          ↑             |
+| Session            |          ↑             |
+| Transport          | Transport              |
+| Network            | Internet               |
+| Data Link          |          ↓             |
+| Physical           | Network Access (Link)  |
+
+Key Differences:
+----------------
+- OSI is a **theoretical model**; TCP/IP is the **real-world implementation**.
+- OSI has 7 layers; TCP/IP has 4 layers.
+- TCP/IP protocols are the foundation of the internet.
+

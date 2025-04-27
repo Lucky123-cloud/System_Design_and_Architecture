@@ -1,0 +1,61 @@
+The main goal of system design is to Engineer and Build systems that meet the needs
+of the business in coherent, efficient and organized way
+
+We do this by designing the architecture, interfaces and data of the system
+The two main core principles of system design is Availability and reliabilty
+
+
+AVAILABILITY IN SYSTEM DESIGN
+=============================
+
+What is Availability?
+---------------------
+Availability refers to the ability of a system to remain operational and accessible when needed — even in the face of failures. A highly available system is up and responsive most of the time.
+
+Formula:
+  Availability = (Uptime) / (Uptime + Downtime)
+
+Common "Nines" of Availability:
+  - 99%     => ~3.65 days downtime/year
+  - 99.9%   => ~8.76 hours/year
+  - 99.99%  => ~52.6 minutes/year
+  - 99.999% => ~5.26 minutes/year
+
+Availability vs Reliability vs Durability:
+  - Availability: System is up and responsive
+  - Reliability: System performs correctly without failure
+  - Durability: Once data is written, it stays written
+
+Availability in Distributed Systems
+-----------------------------------
+To achieve high availability:
+  1. Redundancy (multiple servers, multiple data centers)
+  2. Failover mechanisms (automatic switch on failure)
+  3. Load balancing (distributes traffic evenly)
+  4. Replication (copies of data for fault tolerance)
+  5. Health checks & monitoring (early failure detection)
+
+Design Patterns that Support Availability:
+  - Leader-Follower Replication
+  - Quorum-based Reads/Writes
+  - Circuit Breakers
+  - Retry Mechanisms with Exponential Backoff
+
+CAP Theorem and Trade-offs
+--------------------------
+In distributed systems, you can only guarantee two of the following three:
+  - Consistency
+  - Availability
+  - Partition Tolerance
+
+If a network partition occurs, you must choose:
+  - CP (Consistency + Partition Tolerance): prioritizes correct data over being always up
+  - AP (Availability + Partition Tolerance): prioritizes being up even if some data is stale
+
+Examples:
+---------
+  - Amazon DynamoDB: Highly Available (AP)
+  - Google Spanner: Consistent and Partition Tolerant (CP)
+  - Netflix Systems: Prioritize Availability
+
+

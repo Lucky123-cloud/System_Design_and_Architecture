@@ -1,0 +1,64 @@
+UDP vs TCP
+==========
+
+Definition of UDP:
+------------------
+UDP (User Datagram Protocol) is a lightweight, connectionless transport protocol.
+It sends messages, called **datagrams**, without setting up a connection and without guaranteeing delivery, order, or error checking.
+
+Key Characteristics of UDP:
+----------------------------
+- **No connection setup**: Sends data immediately without a handshake.
+- **No reliability**: No acknowledgment if the data was received.
+- **No ordering**: Packets may arrive out of order.
+- **Low overhead**: Faster and more efficient for real-time applications.
+- **Best-effort delivery**: Send and forget.
+
+Common Use Cases for UDP:
+--------------------------
+- Online gaming
+- Live video or audio streaming
+- Voice over IP (VoIP)
+- DNS queries
+- TFTP (Trivial File Transfer Protocol)
+
+Definition of TCP:
+------------------
+TCP (Transmission Control Protocol) is a heavy, connection-oriented protocol.
+It establishes a connection before sending data and ensures reliable, ordered, and error-checked delivery.
+
+Key Characteristics of TCP:
+----------------------------
+- **Connection setup**: Requires a three-way handshake before sending data.
+- **Reliability**: Guarantees data arrives successfully.
+- **Ordering**: Packets are reassembled in the correct order.
+- **Error checking**: Detects missing or corrupted data and resends it.
+- **Higher overhead**: More control but slightly slower.
+
+Common Use Cases for TCP:
+--------------------------
+- Web browsing (HTTP, HTTPS)
+- Email (SMTP, IMAP, POP3)
+- File transfers (FTP)
+- Remote administration (SSH)
+
+Main Differences: (Quick Summary)
+---------------------------------
+
+| Feature             | TCP                                  | UDP                                |
+|---------------------|--------------------------------------|------------------------------------|
+| Connection          | Connection-oriented (handshake)     | Connectionless (no handshake)      |
+| Reliability         | Reliable delivery                   | No guarantee of delivery          |
+| Ordering            | Ordered data transfer               | No ordering                       |
+| Speed               | Slower (more overhead)               | Faster (low overhead)              |
+| Use Cases           | Web, Email, File Transfer            | Streaming, Gaming, VoIP, DNS       |
+| Error Checking      | Yes, with retransmission             | Minimal, best-effort delivery      |
+
+Simple Analogy:
+---------------
+- **TCP is like sending a package by courier with tracking**: 
+  - The courier confirms delivery, handles lost packages, and keeps them in order.
+
+- **UDP is like mailing a postcard**: 
+  - You just send it — no guarantee it gets there, no tracking, but it's fast and simple.
+

@@ -1,0 +1,96 @@
+HOW TCP/IP WORKS
+================
+
+High-Level Overview:
+--------------------
+TCP/IP works by **breaking down communication into layers**, each handling a specific part of the job. When you send data (like opening a website), TCP/IP makes sure the data gets from your device to the destination device **accurately and efficiently**.
+
+Step-by-Step Process:
+----------------------
+
+1. Application Layer
+---------------------
+- Your app (like a web browser) creates the data you want to send.
+- Example: You type "www.example.com" into Chrome.
+- HTTP (HyperText Transfer Protocol) creates a request for that web page.
+
+2. Transport Layer
+-------------------
+- TCP breaks the HTTP request into smaller pieces called **segments**.
+- TCP also numbers these segments to keep track of them.
+- It ensures reliable delivery by adding error checking.
+- If any segment is lost, TCP will **retransmit** it.
+
+3. Internet Layer
+------------------
+- Each segment is packed into a **packet**.
+- IP assigns a **source IP address** (your device) and a **destination IP address** (the web server).
+- IP handles finding the best route across networks to reach the destination.
+
+4. Network Access Layer (Link Layer)
+------------------------------------
+- Converts packets into **frames** (with MAC addresses).
+- Sends the frames over the physical medium (like Wi-Fi, Ethernet cables).
+
+At the Receiving End:
+----------------------
+- The web server receives the frames.
+- The Network Layer reassembles frames into packets.
+- The Internet Layer reads the IP information.
+- The Transport Layer reassembles all segments in the right order.
+- The Application Layer processes the HTTP request and sends back the web page!
+
+Important Points:
+-----------------
+- **TCP** ensures reliable, ordered delivery.
+- **IP** ensures the packet reaches the correct destination.
+- Layers are independent — each layer only focuses on its own task.
+
+Simple Analogy:
+---------------
+Imagine mailing a book:
+- Application Layer = Writing the letter and deciding what to send.
+- Transport Layer = Dividing the book into chapters and numbering them.
+- Internet Layer = Putting each chapter into an envelope with addresses.
+- Network Access Layer = Delivering the envelopes via postal trucks and sorting centers.
+
+TCP/IP makes sure that even if envelopes take different roads, they all eventually reach the right house and can be reassembled correctly!
+
+
+TCP Initial Sequence Number (ISN)
+---------------------------------
+
+What is ISN?
+=============
+ISN (Initial Sequence Number) is a randomly generated number 
+used in the TCP three-way handshake to establish a reliable connection. 
+Each device generates an ISN when initiating a TCP connection.
+
+Why ISN is Important:
+======================
+1. Ensures data is received in the correct order.
+2. Prevents confusion between different TCP connections.
+3. Provides security against TCP sequence prediction attacks.
+
+How ISN Works in the TCP Three-Way Handshake:
+=============================================
+1. **SYN (Synchronize)** → The client sends a TCP packet with its ISN.
+2. **SYN-ACK (Synchronize + Acknowledge)** → The server responds with its own ISN and acknowledges the client’s ISN.
+3. **ACK (Acknowledge)** → The client acknowledges the server’s ISN.
+
+Example Handshake Process:
+--------------------------
+1. Client → Server: SYN, ISN=1000
+2. Server → Client: SYN-ACK, ISN=5000, ACK=1001
+3. Client → Server: ACK, ACK=5001
+
+Now, the connection is established and data transfer can begin.
+
+Key Notes:
+==========
+- ISN is **randomly chosen** to make TCP connections more secure.
+- ISN helps manage and track **packet order and reliability**.
+- ISN prevents attackers from easily predicting sequence numbers 
+  and hijacking a connection.
+
+
