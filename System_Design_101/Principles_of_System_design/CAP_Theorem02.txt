@@ -1,0 +1,73 @@
+Database System Design Notes: CAP Theorem
+
+------------------------------------------------------------
+
+CAP Theorem (Consistency, Availability, Partition Tolerance)
+
+The CAP theorem, also called Brewer's theorem, states that in a distributed data system, it is impossible to simultaneously guarantee all three of the following:
+
+1. Consistency (C)
+- Every read receives the most recent write or an error.
+- Example: After updating your Instagram bio, anyone reading it should immediately see the new version.
+
+2. Availability (A)
+- Every request (read or write) receives a (non-error) response, even without the most recent write.
+- Example: Even during network issues, your requests get a response (even if data may be slightly outdated).
+
+3. Partition Tolerance (P)
+- The system continues to operate despite arbitrary message loss or failure of part of the system.
+- Example: Even if a network link between two data centers is broken, the system still runs.
+
+------------------------------------------------------------
+
+What CAP Theorem Says
+
+- In the presence of a network partition (P), a distributed system must choose between:
+  - Consistency (C)
+  - Availability (A)
+- You cannot achieve all three at the same time.
+- During a partition, you can either:
+  - Stay Consistent (but some parts might be unavailable)
+  - Stay Available (but might serve stale/old data)
+
+------------------------------------------------------------
+
+CAP Choices: Types of Systems
+
+1. CP (Consistency + Partition Tolerance)
+- Prioritize correctness over availability.
+- Example: Traditional relational databases like HBase during partitions.
+
+2. AP (Availability + Partition Tolerance)
+- Prioritize system being always up, even if some inconsistency exists.
+- Example: DNS systems (Domain Name Systems).
+
+3. CA (Consistency + Availability)
+- Possible only when there are no network partitions (rare in distributed systems).
+- Example: Single-node databases (no real network partitioning).
+
+------------------------------------------------------------
+
+Real World Examples
+
+- CP System Example: MongoDB (with certain configurations), HBase
+- AP System Example: Couchbase, Cassandra, DynamoDB
+- CA Systems: Only achievable theoretically or on a single machine (local database).
+
+------------------------------------------------------------
+
+Quick Summary
+
+- CAP helps decide how to design distributed systems based on business needs.
+- Choose Consistency if correctness is critical.
+- Choose Availability if the system must always respond, even with stale data.
+- Partition Tolerance is a must in any practical distributed system.
+
+------------------------------------------------------------
+
+Final Thought
+
+In real-world systems, Partition Tolerance is always needed because networks can and will fail.  
+Thus, designers must balance between Consistency and Availability based on their priorities.
+
+------------------------------------------------------------

@@ -1,0 +1,7 @@
+CAP Theorem CP
+
+- C - constistentcy
+- A - Availability
+- P - Partition tolerance
+
+The system can only have 2 of the 3

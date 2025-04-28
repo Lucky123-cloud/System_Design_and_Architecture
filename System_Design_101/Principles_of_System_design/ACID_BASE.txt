@@ -1,0 +1,69 @@
+Database System Design Notes: ACID vs BASE
+
+------------------------------------------------------------
+
+ACID Properties (Traditional Relational Databases)
+
+ACID ensures reliable processing of database transactions and maintains consistency even in case of failures. It stands for:
+
+1. Atomicity
+- Transactions are all-or-nothing. Either all operations succeed or none do.
+- Example: Money transfer between two accounts - if debit fails, credit must not happen.
+
+2. Consistency
+- Transactions bring the database from one valid state to another, maintaining database rules (constraints, triggers, etc.).
+- Example: Bank account balance cannot be negative if business rules disallow it.
+
+3. Isolation
+- Concurrent transactions execute independently without interfering.
+- Example: Two users booking the last ticket simultaneously should not both succeed.
+
+4. Durability
+- Once a transaction commits, changes are permanent even if the system crashes immediately.
+- Example: After submitting an order, even if the server crashes, the order remains recorded.
+
+------------------------------------------------------------
+
+BASE Properties (Modern Distributed Databases)
+
+BASE is more flexible for large, distributed, and high-availability systems. It stands for:
+
+1. Basically Available
+- The system guarantees availability even during partial failures.
+- Example: Facebook shows stale data if new data isn't available yet.
+
+2. Soft State
+- The state of the system can change over time, even without input, due to eventual consistency.
+- Example: A user's profile update might temporarily show old data before syncing.
+
+3. Eventual Consistency
+- Data will become consistent eventually, not immediately.
+- Example: Amazon product reviews may not appear instantly across all servers but eventually do.
+
+------------------------------------------------------------
+
+Summary: When to Use
+
+Property     | ACID                                       | BASE
+-------------|---------------------------------------------|--------------------------------------------------------
+Use Case     | Banking, finance, critical systems         | Social networks, ecommerce, large-scale systems
+Strength     | Reliability, data integrity                | Scalability, availability
+Weakness     | Hard to scale horizontally                 | Eventual consistency may not be acceptable
+
+------------------------------------------------------------
+
+Quick Mnemonics
+
+- ACID: Reliable, consistent, safe
+- BASE: Available, scalable, eventually consistent
+
+------------------------------------------------------------
+
+Final Thought
+
+- ACID emphasizes correctness.
+- BASE emphasizes availability and performance.
+
+Choosing between them depends on the business requirements: strict correctness vs high scalability.
+
+------------------------------------------------------------

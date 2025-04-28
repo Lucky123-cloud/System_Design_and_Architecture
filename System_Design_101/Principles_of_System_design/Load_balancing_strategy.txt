@@ -1,0 +1,5 @@
+Round Robin
+weighted round robin
+
+Fixing load balancer crushing:
+1. Use a backup load balancer - Redundancy
