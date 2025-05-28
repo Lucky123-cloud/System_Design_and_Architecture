@@ -1,0 +1,107 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. POD CONCEPT IN KUBERNETES
+
+OVERVIEW
+--------
+The Pod is the most important and fundamental object in Kubernetes.
+It represents the smallest deployable unit and encapsulates one or more containers that:
+- Share the same network namespace (same IP),
+- Can share storage volumes,
+- Share other namespaces (e.g., PID, IPC).
+
+Pods are designed to support tightly coupled processes — usually one main container and one or more support containers (sidecars).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MULTI-CONTAINER PODS
+
+DESCRIPTION
+-----------
+A pod can contain multiple containers that work together.
+This allows auxiliary tasks (e.g., logging, syncing) to run alongside the main application.
+
+EXAMPLE POD DEFINITION
+-----------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-sidecar
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.19
+    ports:
+    - containerPort: 80
+  - name: count
+    image: busybox:1.34
+    args: [/bin/sh, -c,
+           'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
+
+NOTES
+-----
+- All containers start simultaneously.
+- They share the same IP and can communicate via `localhost`.
+- Sidecar pattern: Supporting containers running alongside the main container.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INIT CONTAINERS
+
+DESCRIPTION
+-----------
+Init containers run **before** the main containers start.
+They are used for setup tasks such as:
+- Waiting for services,
+- Preprocessing configs or data,
+- Running scripts.
+
+EXAMPLE WITH INIT CONTAINER
+----------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox
+    command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
+
+NOTES
+-----
+- Init containers must complete successfully before the main containers start.
+- They run in sequence (one after another).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT POD SETTINGS
+
+1. resources
+-------------
+- Defines CPU and memory requests/limits.
+- Helps the scheduler place the Pod efficiently.
+
+2. livenessProbe
+-----------------
+- Periodically checks if the container is alive.
+- If the probe fails repeatedly, Kubernetes restarts the container.
+
+3. securityContext
+-------------------
+- Defines security settings like:
+  - User/Group ID,
+  - Kernel capabilities,
+  - ReadOnly root filesystem.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BEST PRACTICES
+
+- Use sidecars for support tasks, not for scalable components.
+- Avoid putting too many containers in a single Pod unless tightly coupled.
+- Use initContainers for controlled startup sequences.
+- Always define resource requests and limits for predictable behavior.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

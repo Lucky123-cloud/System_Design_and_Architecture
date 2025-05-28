@@ -1,0 +1,35 @@
+OBSERVABILITY
+=============
+
+1. DEFINITION
+-------------
+- Often confused with monitoring, but monitoring is just one subcategory.
+- Observability is rooted in control theory about dynamic systems behavior.
+- Control theory focuses on measuring external outputs to influence system behavior.
+
+2. EXAMPLE: CRUISE CONTROL
+--------------------------
+- Desired car speed is set and constantly measured (speedometer).
+- To maintain speed uphill, engine power is adjusted.
+- Similar concept applies to autoscaling in IT systems.
+
+3. OBSERVABILITY IN IT SYSTEMS
+------------------------------
+- Set desired system utilization.
+- Trigger scaling or other events based on load.
+- Main challenge is tracking system behavior, interactions, and performance under load or errors.
+
+4. KEY QUESTIONS OBSERVABILITY ANSWERS
+--------------------------------------
+- Is the system stable or does it change state under manipulation?
+- Is the system sensitive to changes (e.g., latency in some services)?
+- Do any metrics exceed thresholds?
+- Why do certain requests fail?
+- Are there bottlenecks?
+
+5. PURPOSE AND BENEFITS
+-----------------------
+- Enables data analysis for better understanding.
+- Helps in reacting to errors or performance issues.
+- Supports agile software development feedback loops.
+- Encourages continuous adaptation based on system behavior.

@@ -1,0 +1,113 @@
+INTERACTING WITH KUBERNETES
+
+To access the Kubernetes API, users use the official command-line interface: **kubectl**.
+
+INSTALLING KUBECTL:
+Refer to the official Kubernetes documentation for installation instructions.
+
+LISTING AVAILABLE OBJECTS
+
+To list available Kubernetes resources:
+
+$ kubectl api-resources
+
+Example Output:
+NAME                    SHORTNAMES  APIVERSION  NAMESPACED  KIND
+----------------------------------------------------------------
+configmaps              cm          v1          true        ConfigMap
+namespaces              ns          v1          false       Namespace
+nodes                   no          v1          false       Node
+persistentvolumeclaims  pvc         v1          true        PersistentVolumeClaim
+pods                    po          v1          true        Pod
+services                svc         v1          true        Service
+
+- **Short names** help simplify command-line usage.
+- **NAMESPACED** indicates if the object is restricted to a namespace.
+- **APIVERSION** and **KIND** tell you the API and type of object.
+
+EXPLAINING KUBERNETES OBJECTS
+
+You can explore details about any object with:
+
+$ kubectl explain <object>
+
+Example:
+
+$ kubectl explain pod
+
+Output:
+KIND:     Pod  
+VERSION:  v1  
+DESCRIPTION:
+  Pod is a collection of containers that can run on a host.
+  This resource is created by clients and scheduled onto hosts.
+
+Key Fields:
+- apiVersion
+- kind
+- metadata
+- spec
+
+To go deeper into a specific field, use dot notation:
+
+$ kubectl explain pod.spec
+
+Output:
+KIND:     Pod  
+VERSION:  v1  
+RESOURCE: spec <Object>
+
+DESCRIPTION:
+  Specification of the desired behavior of the pod.
+  More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+Key Fields inside pod.spec:
+- activeDeadlineSeconds
+- affinity
+- automountServiceAccountToken
+- containers (required)
+
+HELP AND BASIC COMMANDS
+
+Use the --help flag to explore available commands:
+
+$ kubectl --help
+
+Basic Commands (Beginner):
+- create: Create a resource from a file or stdin
+- expose: Expose a resource as a new service
+- run: Run a particular image on the cluster
+- set: Set features on objects
+
+Basic Commands (Intermediate):
+- explain: Get documentation for a resource
+- get: Display resources
+- edit: Edit a resource
+- delete: Delete resources
+
+CREATING AN OBJECT
+
+To create an object using a YAML file:
+
+$ kubectl create -f <your-file>.yaml
+
+GRAPHICAL USER INTERFACES
+
+There are GUIs and dashboards for Kubernetes that provide visual interaction with your cluster.
+
+Popular Interfaces:
+- kubernetes/dashboard (official)
+- derailed/k9s (terminal UI)
+- Lens
+- VMware Tanzu Octant
+
+PACKAGE MANAGEMENT WITH HELM
+
+**Helm** is the most widely used package manager for Kubernetes.
+
+- It simplifies updates and object management.
+- Helm packages are called **Charts**.
+- Charts can be shared via registries like **ArtifactHub**.
+
+To explore Helm Charts and deploy software easily, visit:
+👉 https://artifacthub.io

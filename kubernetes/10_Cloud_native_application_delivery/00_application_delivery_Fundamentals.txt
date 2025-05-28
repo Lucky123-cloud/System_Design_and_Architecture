@@ -1,0 +1,42 @@
+APPLICATION DELIVERY FUNDAMENTALS
+================================
+
+1. SOURCE CODE MANAGEMENT
+-------------------------
+- Every application starts with source code.
+- Source code is intellectual property and capital.
+- Best managed by a version control system.
+
+2. GIT VERSION CONTROL
+----------------------
+- Created by Linus Torvalds in 2005.
+- Industry standard for version control.
+- Decentralized system tracking changes in code.
+- Supports branches or forks for isolated development.
+- Changes merged back into the main branch after review.
+- Highly recommended to learn Git deeply.
+
+3. BUILDING THE APPLICATION
+---------------------------
+- After managing source code, next step is building the application.
+- Building can include creating container images (see Container Orchestration).
+- Builds package your app for deployment.
+
+4. TESTING
+----------
+- Automated and extensive testing ensures quality.
+- Validates that functionality remains intact after changes.
+
+5. APPLICATION DELIVERY
+-----------------------
+- Deliver your app to the target platform (e.g., Kubernetes).
+- Use YAML manifests for deployment configuration.
+- Push container images to registries for Kubernetes to pull.
+
+6. INFRASTRUCTURE AS CODE (IaC)
+-------------------------------
+- Source code management now also applies to infrastructure.
+- Describe infrastructure via code files rather than manual setup.
+- Use cloud vendor APIs to provision infrastructure automatically.
+- Allows developers greater involvement in infrastructure setup.
+- Facilitates repeatable, version-controlled infrastructure changes.

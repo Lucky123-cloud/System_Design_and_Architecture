@@ -1,0 +1,127 @@
+KUBERNETES SCHEDULING OBJECTS - SUMMARY
+=======================================
+
+The Kubernetes scheduler assigns Pods to Nodes based on constraints and available resources. It evaluates all valid nodes, ranks them, and binds a Pod to a suitable Node.
+
+There are multiple ways to control scheduling:
+
+1. NODE SELECTOR
+----------------
+- Simplest node selection method.
+- You specify labels that a node must have.
+- Example:
+  nodeSelector:
+    disktype: ssd
+- Pod will only be scheduled to nodes with the label `disktype=ssd`.
+
+2. AFFINITY & ANTI-AFFINITY
+---------------------------
+- More expressive than nodeSelector.
+- Preferred or required rules (soft or hard constraints).
+- You can define:
+  - Node affinity: similar to nodeSelector, but supports expressions.
+  - Pod affinity: schedule Pods near certain other Pods.
+  - Pod anti-affinity: avoid scheduling Pods near certain other Pods.
+
+3. NODENAME
+-----------
+- Binds a Pod to a specific node.
+- Overrides other scheduling mechanisms.
+- Example:
+  nodeName: node-1
+
+4. TOPOLOGY SPREAD CONSTRAINTS
+------------------------------
+- Spread Pods evenly across topology domains (zones, nodes, etc).
+- Improves fault tolerance and availability.
+- Example: 
+  TopologyKey: failure-domain.beta.kubernetes.io/zone
+
+5. TAINTS & TOLERATIONS
+-----------------------
+- Taints repel Pods from nodes.
+- Tolerations allow Pods to be scheduled on tainted nodes.
+- Example taint:
+  kubectl taint node node1 region=useast2:NoSchedule
+- Example toleration:
+  tolerations:
+  - key: "region"
+    operator: "Equal"
+    value: "useast2"
+    effect: "NoSchedule"
+
+---
+
+KUBERNETES SECURITY - SUMMARY
+=============================
+
+Kubernetes security spans hardware, OS, software, and Kubernetes configuration itself.
+
+1. PLATFORM SECURITY
+--------------------
+- Harden hardware, firmware, and OS binaries.
+- Security starts at design phase and continues through lifecycle.
+
+2. NETWORK SECURITY
+-------------------
+- Secure external access using firewalls.
+- Internally use:
+  - Pod-to-pod encryption.
+  - NetworkPolicies.
+  - Service mesh solutions (e.g., Istio, Linkerd).
+
+3. IMAGE & CONTAINER SECURITY
+-----------------------------
+- Minimize base images.
+- Enforce immutability of containers.
+- Scan images (static and runtime) in CI/CD pipeline.
+- Use AppArmor, SELinux for extra protection.
+
+4. CONTINUOUS MONITORING
+------------------------
+- Use intrusion detection and behavioral analytics tools.
+- Continuously assess and update policies.
+- Respond quickly to threats.
+
+---
+
+API ACCESS CONTROL
+==================
+
+To interact with the Kubernetes API, three steps apply:
+
+1. AUTHENTICATION
+-----------------
+- Prove your identity (user/service account).
+- Set via kube-apiserver flags:
+  --token-auth-file
+  --basic-auth-file
+  --oidc-issuer-url
+
+2. AUTHORIZATION (RBAC)
+-----------------------
+- Define who can do what.
+- Use Roles and ClusterRoles to specify allowed operations.
+- Bind them to users, service accounts, or groups using RoleBinding or ClusterRoleBinding.
+
+  Example:
+  Role: read pods in "dev" namespace.
+  Binding: allow "dev-user" to use that Role.
+
+3. ADMISSION CONTROLLERS
+------------------------
+- Validate or mutate incoming API requests.
+- Can deny requests before persistence.
+- Examples:
+  - NamespaceLifecycle
+  - ResourceQuota
+  - PodSecurityPolicy (deprecated but informative)
+  - ValidatingAdmissionWebhook
+- External tools like **Open Policy Agent (OPA)** can be used to manage policy.
+
+OPA QUICK FACTS:
+----------------
+- Policy engine for Kubernetes and beyond.
+- Supports Rego language.
+- Enforces rules declaratively.
+- Created by Styra, part of CNCF.

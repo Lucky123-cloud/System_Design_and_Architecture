@@ -1,0 +1,44 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+1. POD LIFECYCLE IN KUBERNETES  
+
+OVERVIEW  
+--------  
+Pods go through several **phases** from creation to termination. These phases help track what’s happening with a Pod at any point in time.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+POD LIFECYCLE PHASES  
+
+1. Pending  
+   - Pod accepted by the cluster.  
+   - Containers not created yet.  
+   - May be waiting to be scheduled or downloading images.  
+
+2. Running  
+   - Pod assigned to a node.  
+   - All containers created; at least one is running or starting/restarting.  
+
+3. Succeeded  
+   - All containers exited successfully (exit code 0).  
+   - Pod will not restart.  
+
+4. Failed  
+   - All containers stopped, but at least one failed (non-zero exit code or crash).  
+   - Pod will not restart.  
+
+5. Unknown  
+   - Kubernetes can’t determine Pod state (e.g., node unreachable).  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+NOTES  
+-----  
+- A Pod starts in **Pending**, moves to **Running**, and ends in either **Succeeded** or **Failed**.  
+- **Unknown** happens rarely and usually indicates a problem in communication.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+EXTRA TIPS  
+----------  
+- Use `kubectl describe pod <pod-name>` to see why a Pod is stuck in a phase.  
+- Use `kubectl get pods` to see the current phase/status.  
+- Failed Pods may require checking logs: `kubectl logs <pod-name>`.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

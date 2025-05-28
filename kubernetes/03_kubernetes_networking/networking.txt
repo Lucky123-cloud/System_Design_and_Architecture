@@ -1,0 +1,72 @@
+KUBERNETES NETWORKING
+=====================
+
+Kubernetes networking can be complex and difficult to understand. Many of the networking concepts involved are not unique to Kubernetes and are also used in general container orchestration.
+
+A major challenge is enabling communication between many containers across multiple nodes. Kubernetes breaks this problem down into four main networking scenarios:
+
+1. Container-to-Container Communication
+   - This is handled using the Pod concept. Multiple containers in the same Pod share the same network namespace, which allows them to communicate via localhost.
+
+2. Pod-to-Pod Communication
+   - This is enabled through an overlay network that connects Pods across nodes in the cluster.
+
+3. Pod-to-Service Communication
+   - This is implemented by the kube-proxy component and packet filtering on each node. Services act as stable endpoints that Pods can access.
+
+4. External-to-Service Communication
+   - This allows communication from outside the cluster to services running inside the cluster.
+   - Also handled by kube-proxy and node-level packet filtering.
+
+KUBERNETES NETWORKING REQUIREMENTS
+==================================
+
+Kubernetes networking implementations must satisfy the following requirements:
+
+- All Pods can communicate with each other across nodes.
+- All nodes can communicate with all Pods.
+- No Network Address Translation (NAT) is required.
+
+COMMON NETWORKING SOLUTIONS
+===========================
+
+Kubernetes does not dictate a single networking implementation. Instead, it supports various network plugins. Some popular options include:
+
+- Project Calico
+- Weave
+- Cilium
+
+Each of these tools provides ways to implement the networking model and may support additional features like Network Policies or encryption.
+
+POD NETWORKING
+==============
+
+Each Pod in Kubernetes receives its own IP address. This eliminates the need for manual port mapping or configuration.
+
+Kubernetes clusters typically include a DNS add-on, such as CoreDNS. This service supports:
+
+- DNS-based service discovery
+- Internal name resolution for services and Pods
+
+This makes it easier for applications to find and communicate with each other inside the cluster.
+
+NETWORK POLICIES
+================
+
+By default, all Pods in a Kubernetes cluster can communicate with each other without any restrictions.
+
+To control traffic between Pods or namespaces, you can define Network Policies. These act like internal firewalls.
+
+A Network Policy can:
+
+- Limit which Pods or namespaces are allowed to communicate.
+- Use selectors to match target Pods.
+- Control both ingress (incoming) and egress (outgoing) traffic.
+- Define rules based on IP blocks (CIDR ranges).
+
+IMPORTANT NOTES ABOUT NETWORK POLICIES
+======================================
+
+- Network Policies are implemented by the network plugin being used.
+- You must use a networking solution that supports NetworkPolicy.
+- Creating a NetworkPol

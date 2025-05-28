@@ -1,0 +1,96 @@
+==============================
+Prometheus Monitoring System
+==============================
+
+Overview
+--------
+- Prometheus is an open-source monitoring system.
+- Originally developed at SoundCloud.
+- Became the second CNCF-hosted project in 2016.
+- Popular especially in Kubernetes and container ecosystems.
+
+Prometheus Data Model - Core Metrics
+-----------------------------------
+1. Counter:
+   - Monotonically increasing value (e.g., request count, error count).
+2. Gauge:
+   - Value that can go up or down (e.g., memory usage).
+3. Histogram:
+   - Samples observations (e.g., request durations, response sizes).
+4. Summary:
+   - Similar to histogram, also provides total count of observations.
+
+Exposing Metrics
+----------------
+- Applications expose metrics via an HTTP endpoint at `/metrics`.
+- Use official client libraries for:
+  - Go, Java/Scala, Python, Ruby.
+- Many unofficial libraries also available.
+
+Example Prometheus Metrics Output:
+
+# HELP queue_length The number of items in the queue.
+# TYPE queue_length gauge
+queue_length 42
+
+# HELP http_requests_total The total number of handled HTTP requests.
+# TYPE http_requests_total counter
+http_requests_total 7734
+
+# HELP http_request_duration_seconds Histogram of request durations in seconds.
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{le="0.05"} 4599
+http_request_duration_seconds_sum 88364.234
+http_request_duration_seconds_count 227420
+
+# HELP http_request_duration_seconds Summary of request durations in seconds.
+# TYPE http_request_duration_seconds summary
+http_request_duration_seconds{quantile="0.5"} 0.052
+http_request_duration_seconds_sum 88364.234
+http_request_duration_seconds_count 227420
+
+Kubernetes Integration
+----------------------
+- Prometheus can auto-discover Kubernetes services.
+- Collects metrics at defined intervals.
+- Stores data in a time series database.
+
+Querying with PromQL
+--------------------
+- Prometheus Query Language (PromQL) allows powerful, real-time data queries.
+- Examples:
+
+  # Select metrics with specific labels
+  http_requests_total{job="apiserver", handler="/api/comments"}
+
+  # Calculate per-second rate over the last 5 minutes
+  rate(http_requests_total[5m])
+
+- Useful for monitoring trends and predicting failures.
+
+Visualization and Alerting
+--------------------------
+- Grafana is the most popular visualization tool for Prometheus data.
+- Grafana supports many data sources beyond Prometheus.
+
+Alertmanager
+------------
+- Prometheus can trigger alerts based on metric thresholds.
+- Alertmanager sends notifications via chat tools, email, etc.
+- Example alerting rule:
+
+groups:
+- name: example
+  rules:
+  - alert: HighRequestLatency
+    expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5 for: 10m
+    labels:
+      severity: page
+    annotations:
+      summary: High request latency
+
+Summary
+-------
+Prometheus is a powerful, flexible monitoring solution ideal for containerized and cloud-native environments.
+It collects, stores, queries, visualizes, and alerts on time series metrics efficiently.
+

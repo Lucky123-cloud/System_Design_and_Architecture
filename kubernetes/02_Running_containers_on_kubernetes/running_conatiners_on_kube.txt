@@ -1,0 +1,86 @@
+RUNNING CONTAINERS ON KUBERNETES
+================================
+
+Running a container on your local machine is different from running it inside a Kubernetes cluster.
+
+On your local machine, you typically run containers directly using a tool like Docker or Podman.
+
+In Kubernetes, you do not start containers directly. Instead, you define a Pod.
+
+A Pod is the smallest deployable unit in Kubernetes and acts as a wrapper around one or more containers. Kubernetes uses the Pod definition to start the actual containers on the cluster.
+
+When you create a Pod in Kubernetes, multiple components work together to schedule and run the containers on one of the nodes in the cluster.
+
+EXAMPLE USING CONTAINERD
+-------------------------
+
+Let’s say Kubernetes uses containerd as the container runtime (instead of Docker). In this case, Kubernetes talks to containerd to create and manage containers. The process is automated and abstracted from the user.
+
+CONTAINER RUNTIMES IN KUBERNETES
+================================
+
+To allow Kubernetes to use other runtimes besides Docker, the Container Runtime Interface (CRI) was introduced in 2016. CRI is an API that enables Kubernetes to communicate with various container runtimes.
+
+Here are some popular runtimes compatible with CRI:
+
+CONTAINERD
+----------
+
+- A lightweight and efficient container runtime.
+- Extremely popular and widely adopted by major cloud providers.
+- Used in many Kubernetes-as-a-Service platforms.
+
+CRI-O
+-----
+
+- Created by Red Hat.
+- Closely related to Podman and Buildah.
+- Lightweight and built specifically to support Kubernetes.
+
+DOCKER
+------
+
+- For a long time, Docker was the default container runtime in Kubernetes.
+- However, Docker was not built for orchestration and does not natively support CRI.
+- Kubernetes deprecated Docker as a runtime starting with version 1.20.
+- Support for Docker was fully removed in Kubernetes version 1.24.
+- Kubernetes provides a detailed blog post explaining this change and what it means.
+
+PURPOSE OF CONTAINERD AND CRI-O
+-------------------------------
+
+The main goal of containerd and CRI-O is to provide a minimal runtime that includes only the necessary components to run containers. They are designed for performance and simplicity.
+
+Despite being lightweight, they also support advanced features such as:
+
+- Integration with sandboxing tools
+- Enhanced security for container workloads
+
+SECURITY WITH CONTAINER SANDBOXING
+==================================
+
+Running multiple containers on the same kernel creates potential security risks. To address this, several sandboxing tools have been created:
+
+GVISOR
+------
+
+- Developed by Google.
+- Provides an application kernel that sits between the container and the host kernel.
+- Adds a security layer by isolating the container from the host.
+
+KATA CONTAINERS
+---------------
+
+- Provides strong isolation using lightweight virtual machines.
+- Feels like a container to the user, but runs inside a VM for better security.
+
+SUMMARY
+-------
+
+- Locally, containers are run directly using Docker or other tools.
+- In Kubernetes, containers are run inside Pods.
+- Pods are created and managed by Kubernetes, using a container runtime.
+- Kubernetes uses the CRI to support different container runtimes.
+- Popular runtimes include containerd and CRI-O.
+- Docker is no longer supported as a runtime in Kubernetes.
+- Security tools like gVisor and Kata Containers help isolate workloads safely.

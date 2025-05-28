@@ -1,0 +1,34 @@
+===================
+Cost Management in Cloud
+===================
+
+Cloud computing offers virtually infinite resources, charged only when used.
+Optimizing cloud costs requires analyzing actual needs and automating resource scheduling.
+
+Ways to Optimize Costs
+----------------------
+
+1. Identify Wasted and Unused Resources
+   - Monitor resource usage to find idle or unused servers.
+   - Cloud providers offer cost explorers breaking down costs by service.
+   - Autoscaling helps to shut down unneeded instances automatically.
+
+2. Right-Sizing
+   - Initially, servers may be overpowered.
+   - Use monitoring to determine actual resource needs over time.
+   - Adjust resources to match real load, avoiding paying for excess capacity.
+
+3. Reserved Instances
+   - On-demand pricing is flexible but costly for long-term use.
+   - Reserve resources and pay upfront to save money.
+   - Ideal if resource needs are predictable for months or years.
+
+4. Spot Instances
+   - Suitable for batch jobs or short heavy workloads.
+   - Uses excess capacity offered at low prices.
+   - Spot instances can be terminated with short notice if needed by others paying full price.
+
+Summary
+-------
+Effective cost management combines monitoring, right-sizing, and choosing the right pricing models
+to minimize cloud expenses while maintaining performance and availability.

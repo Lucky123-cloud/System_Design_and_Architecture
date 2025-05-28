@@ -1,0 +1,76 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+3. WORKLOAD OBJECTS IN KUBERNETES  
+
+OVERVIEW  
+--------  
+Pods alone are not enough to ensure resilience and scalability.  
+To manage Pods reliably, Kubernetes provides **controller objects** that ensure desired state (e.g., number of replicas, updates, scheduling).  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+KEY WORKLOAD OBJECTS  
+
+1. ReplicaSet  
+-------------  
+- Ensures a specified number of Pod replicas are running at all times.  
+- Automatically creates new Pods if any are deleted or fail.  
+- Used mostly by Deployments (not often used directly).  
+
+USE CASE:  
+✔️ Ensuring availability and scalability of stateless applications.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+2. Deployment  
+-------------  
+- Manages ReplicaSets and provides declarative updates.  
+- Handles rollouts, rollbacks, and updates.  
+- Ideal for stateless applications.  
+
+USE CASE:  
+✔️ Running and updating web applications, APIs, etc.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+3. StatefulSet  
+---------------  
+- Manages stateful applications.  
+- Provides stable identity (DNS, storage) for each Pod.  
+- Pods are created/deleted in order and retain data between restarts.  
+
+USE CASE:  
+✔️ Databases like MySQL, Cassandra, etc.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+4. DaemonSet  
+------------  
+- Ensures a copy of a Pod runs on **every node** (or selected nodes).  
+- Automatically adds/removes Pods as nodes are added/removed.  
+
+USE CASE:  
+✔️ Running logging agents, monitoring tools, system daemons.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+5. Job  
+------  
+- Creates Pods to run **a task once** and then terminates them.  
+- Ensures completion, retrying if necessary.  
+
+USE CASE:  
+✔️ One-time scripts like DB migration or batch processing.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+6. CronJob  
+----------  
+- Runs Jobs on a **time-based schedule** (like cron in Linux).  
+- Useful for recurring tasks.  
+
+USE CASE:  
+✔️ Nightly backups, scheduled reports, cleanup tasks.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+BEST PRACTICES  
+---------------  
+- Use **Deployment** for stateless apps.  
+- Use **StatefulSet** only when persistent identity and storage are required.  
+- Use **DaemonSet** for cluster-wide tools.  
+- Use **Jobs** and **CronJobs** for short-lived, scheduled, or batch work.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  

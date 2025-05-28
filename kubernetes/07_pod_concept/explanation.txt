@@ -1,0 +1,108 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. POD CONCEPT IN KUBERNETES
+
+WHAT IS A POD?
+--------------
+A Pod is the smallest deployable unit in Kubernetes. It represents one or more containers that share:
+- The same network namespace (IP address and ports).
+- The same storage volumes (filesystem).
+- The same lifecycle.
+
+Kubernetes does not interact directly with containers — it works with Pods.  
+Pods were introduced to allow multiple tightly coupled processes (containers) to run together in isolation.
+
+WHY USE MULTIPLE CONTAINERS?
+----------------------------
+You can run multiple containers in a Pod. These containers:
+- Start at the same time.
+- Can talk to each other via localhost.
+- Can share data using shared storage.
+
+This is useful when you need one container to support another (e.g., logging, proxying).  
+This design pattern is known as a **Sidecar Container**.
+
+EXAMPLE: POD WITH TWO CONTAINERS
+--------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-sidecar
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.19
+    ports:
+    - containerPort: 80
+  - name: count
+    image: busybox:1.34
+    args: [/bin/sh, -c, 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
+
+NOTE:
+- These two containers run together in the same Pod.
+- They share the same IP address and can communicate with each other.
+- You cannot scale them individually — they will always scale together.
+
+INIT CONTAINERS
+---------------
+Init containers are special containers that run before the main containers start.
+
+They are used to:
+- Perform setup tasks (e.g., wait for a service).
+- Ensure some condition is met before the main application starts.
+
+EXAMPLE: POD WITH INIT CONTAINER
+--------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox
+    command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
+
+KEY POD SETTINGS
+----------------
+These are important options you can configure in a Pod:
+
+1. resources:  
+   Set CPU and memory limits.
+   Example:
+   resources:
+     requests:
+       cpu: "200m"
+       memory: "256Mi"
+     limits:
+       cpu: "500m"
+       memory: "512Mi"
+
+2. livenessProbe:  
+   Periodically check if the container is healthy. If the check fails, Kubernetes restarts it.
+   Example:
+   livenessProbe:
+     httpGet:
+       path: /healthz
+       port: 8080
+     initialDelaySeconds: 5
+     periodSeconds: 10
+
+3. securityContext:  
+   Set security-related options like user, group, or kernel capabilities.
+   Example:
+   securityContext:
+     runAsUser: 1000
+     allowPrivilegeEscalation: false
+
+LEARN MORE
+----------
+Check the official documentation for more details:
+https://kubernetes.io/docs/concepts/workloads/pods/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

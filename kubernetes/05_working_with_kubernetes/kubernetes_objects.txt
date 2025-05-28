@@ -1,0 +1,51 @@
+KUBERNETES OBJECTS
+
+One of the core concepts of Kubernetes is providing many abstract resources, called objects, which describe how workloads should be managed. Some objects handle container orchestration problems like scheduling and self-healing, while others address container-related issues such as configuration, networking, and security.
+
+Kubernetes objects can be divided into two main categories:
+
+- Workload-oriented objects: These are used to handle container workloads.
+- Infrastructure-oriented objects: These manage configuration, networking, and security.
+
+Some objects belong to namespaces (logical partitions in a cluster), while others are cluster-wide.
+
+USING YAML TO DEFINE OBJECTS
+
+Users describe Kubernetes objects using YAML, a popular data-serialization language. These YAML files are sent to the Kubernetes api-server, which validates them before creating the objects.
+
+Example of a Deployment object in YAML:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2    # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.19
+        ports:
+        - containerPort: 80
+
+REQUIRED FIELDS
+
+The key required fields in a Kubernetes object YAML file include:
+
+- apiVersion: Specifies the version of the API schema for the object. Object structure may vary between versions.
+- kind: Defines the type of object to create (e.g., Deployment, Pod, Service).
+- metadata: Data to identify the object. A unique name is required. Namespaces allow for objects with the same name to coexist in different scopes.
+- spec: Describes the desired state of the object. The structure of this field depends on the object type and apiVersion.
+
+IMPORTANT NOTES
+
+Creating, modifying, or deleting Kubernetes objects is a way to declare the desired state. Kubernetes takes care of making the actual state match the desired state.
+
+This is different from running containers locally where you start a container and get immediate feedback. In Kubernetes, you declare what you want, and the system works to make it happen over time.

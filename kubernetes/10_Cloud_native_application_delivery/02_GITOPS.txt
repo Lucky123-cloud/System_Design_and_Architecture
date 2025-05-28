@@ -1,0 +1,42 @@
+GITOPS
+======
+
+1. OVERVIEW
+-----------
+- Infrastructure as Code (IaC) revolutionized infrastructure quality and speed.
+- Configuration, network, policies, and security can now be described as code.
+- These configurations often live in the same repository as the software.
+- GitOps extends the concept of Git as the single source of truth to infrastructure provisioning and changes.
+
+2. GITOPS WORKFLOW
+------------------
+- Changes to infrastructure are managed through Git operations (branches, merge/pull requests).
+- Merge requests are reviewed and can trigger CI pipelines before merging.
+- This ensures all changes are validated before deployment.
+
+3. CI/CD PIPELINE APPROACHES IN GITOPS
+--------------------------------------
+a) Push-based:
+   - Pipeline runs tools that apply changes directly after commits or merges.
+b) Pull-based:
+   - An agent watches the Git repository.
+   - Compares repo definition with actual running state.
+   - Applies changes to infrastructure if there are differences.
+
+4. POPULAR GITOPS FRAMEWORKS (PULL-BASED)
+-----------------------------------------
+- Flux:
+  - Built with GitOps Toolkit (APIs and controllers).
+  - Can be extended or used to build custom delivery platforms.
+- ArgoCD:
+  - Implemented as a Kubernetes controller.
+  - Provides architecture for managing GitOps.
+
+5. KUBERNETES AND GITOPS
+------------------------
+- Kubernetes supports declarative provisioning and resource changes.
+- Uses a pull-based approach: monitors database for state changes and reconciles desired state with running state.
+
+6. LEARNING RESOURCE
+--------------------
+- Free course: "Introduction To GitOps (LFS169)"

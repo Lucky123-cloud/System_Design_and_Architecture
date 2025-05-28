@@ -1,0 +1,37 @@
+KUBERNETES ARCHITECTURE - SUMMARY
+---------------------------------
+
+Kubernetes is designed to run as a cluster across multiple servers, enabling high horizontal scalability. It was originally built to meet Google’s need for managing billions of containers weekly. Kubernetes clusters can span thousands of server nodes across different data centers and regions.
+
+MAIN NODE TYPES
+---------------
+
+1. Control Plane Node(s):
+   - These are the “brains” of the cluster.
+   - They manage deployment, scheduling, and self-healing of workloads.
+   - Applications already running on worker nodes will continue even if the control plane goes offline, but new deployments or scaling won’t work.
+
+   Key components:
+   - kube-apiserver: Central access point for managing the cluster.
+   - etcd: A separate key-value database that stores cluster state.
+   - kube-scheduler: Decides where new workloads should run based on resource availability.
+   - kube-controller-manager: Runs loops to ensure the cluster matches the desired state.
+   - cloud-controller-manager (optional): Interfaces with cloud providers for resources like load balancers and storage.
+
+2. Worker Nodes:
+   - These nodes run containerized applications.
+   - They don’t have decision-making logic and rely entirely on the control plane.
+
+   Key components:
+   - Container runtime: Runs containers (e.g., containerd, formerly Docker).
+   - kubelet: Agent that talks to the API server and manages containers on the node.
+   - kube-proxy: Manages networking within the cluster and facilitates internal/external communication.
+
+NAMESPACES IN KUBERNETES
+------------------------
+
+- Kubernetes namespaces allow logical separation of resources in a cluster.
+- Useful for organizing by team, project, or environment (e.g., dev, staging, prod).
+- Not designed for strong security isolation.
+- Think of them like directories on a computer — used for organizing and controlling access.
+

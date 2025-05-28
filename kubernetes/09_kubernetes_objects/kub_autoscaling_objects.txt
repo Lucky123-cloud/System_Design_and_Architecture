@@ -1,0 +1,50 @@
+KUBERNETES AUTOSCALING OBJECTS - SUMMARY
+=======================================
+
+There are three main autoscaling mechanisms in Kubernetes to scale workloads:
+
+1. HORIZONTAL POD AUTOSCALER (HPA)
+-----------------------------------
+- Most commonly used autoscaler.
+- Watches Deployments or ReplicaSets.
+- Automatically increases or decreases the number of Pod replicas based on resource usage.
+- Example:
+  - Pod uses 500MiB memory.
+  - Threshold set at 80% (400MiB).
+  - If usage > 400MiB, HPA adds one more Pod.
+  - More Pods means more total capacity (e.g., 2 Pods = 1000MiB capacity).
+  - If usage grows, more Pods are scheduled accordingly.
+
+2. CLUSTER AUTOSCALER
+---------------------
+- Scales the number of worker nodes in the cluster.
+- Adds new nodes when demand increases.
+- Works in tandem with Horizontal Pod Autoscaler.
+- Prevents over-scheduling Pods on insufficient nodes.
+
+3. VERTICAL POD AUTOSCALER (VPA)
+--------------------------------
+- Adjusts resource requests and limits of Pods dynamically.
+- Allows Pods to scale resource usage up or down vertically.
+- Limited by the capacity of the node the Pod runs on.
+
+Important Notes:
+----------------
+- Horizontal autoscaling is NOT available out-of-the-box.
+- Requires installation of **metrics-server** add-on for resource metrics.
+- Alternative to metrics-server is **Prometheus Adapter for Kubernetes Metrics APIs**.
+  - Enables scaling based on custom metrics like request count or user load.
+
+Advanced Scaling:
+-----------------
+- **KEDA** (Kubernetes-based Event Driven Autoscaler):
+  - Scales workloads based on external event triggers.
+  - Supports scaling Deployments, ReplicaSets, Pods, Kubernetes Jobs, etc.
+  - Can trigger scaling on special events (e.g., database query, pod count).
+  - Started as a Microsoft and Red Hat partnership in 2019.
+
+Learning Resource:
+------------------
+- Interactive Tutorial: "Running Multiple Instances of Your App"
+- Teaches manual scaling of applications.
+

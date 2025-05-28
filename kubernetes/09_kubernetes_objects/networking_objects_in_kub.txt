@@ -1,0 +1,101 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+4. NETWORKING OBJECTS IN KUBERNETES  
+
+OVERVIEW  
+--------  
+Manual networking for each Pod can be complex.  
+Kubernetes simplifies this through **Service**, **Ingress**, and **NetworkPolicy** objects.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+SERVICE TYPES  
+-------------  
+
+1. ClusterIP  
+------------  
+- Default and most common service type.  
+- Creates a virtual IP accessible only within the cluster.  
+- Acts as a round-robin load balancer across matching Pods.  
+
+USE CASE:  
+✔️ Internal communication between microservices.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+2. NodePort  
+-----------  
+- Exposes the ClusterIP to the outside world on a static port (default: 30000–32767).  
+- Opens that port on all nodes and routes external traffic to the internal service.  
+
+USE CASE:  
+✔️ Simple external access during development.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+3. LoadBalancer  
+---------------  
+- Extends NodePort by provisioning an **external Load Balancer**.  
+- Available only on supported platforms (e.g., AWS, GCP, Azure, OpenStack).  
+- Provides a single external IP for the service.  
+
+USE CASE:  
+✔️ Production-grade external access.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+4. ExternalName  
+---------------  
+- Maps a Kubernetes service to an **external DNS name**.  
+- No actual routing happens in Kubernetes — uses DNS CNAME records.  
+
+USE CASE:  
+✔️ Alias external services like cloud databases for easier access.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+5. Headless Service  
+-------------------  
+- Set `clusterIP: None` to create a headless service.  
+- No load balancing or cluster IP assigned.  
+- DNS resolves to the actual Pod IPs directly.  
+
+USE CASE:  
+✔️ StatefulSets that require stable network identity (e.g., database replicas).  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+RELATIONSHIP  
+------------  
+ClusterIP → NodePort → LoadBalancer  
+(Each extends the previous in functionality)  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+INGRESS  
+-------  
+- Used to expose **HTTP/HTTPS routes** externally to services inside the cluster.  
+- Requires an **Ingress Controller** to function.  
+- Allows more flexible routing rules than basic Services.  
+
+FEATURES:  
+- Load balancing  
+- TLS offloading/termination  
+- Name/path-based routing  
+- Custom errors, redirects  
+- Authentication  
+- Monitoring & logging  
+- Rate limiting & session affinity  
+
+USE CASE:  
+✔️ Complex routing scenarios for web apps/APIs  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+NETWORKPOLICY  
+-------------  
+- Provides **firewall-like rules** at OSI Layer 3/4 (IP, port level).  
+- Controls ingress and egress traffic for Pods.  
+
+USE CASE:  
+✔️ Isolating traffic between Namespaces or services for better security.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+BEST PRACTICES  
+---------------  
+- Use **ClusterIP** for internal-only services.  
+- Use **Ingress** over NodePort for production HTTP routing.  
+- Use **NetworkPolicies** to lock down traffic between services.  
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

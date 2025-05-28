@@ -1,0 +1,108 @@
+KUBERNETES API AND ACCESS CONTROL
+=================================
+
+The Kubernetes API is the most important component of a Kubernetes cluster. Without it, communication with the cluster is not possible. Every user and every component of the cluster itself needs the API server to function properly.
+
+The API server (called kube-apiserver) acts as the central communication point. Any time a user or a system inside Kubernetes needs to make a change or get information, it talks to the API server.
+
+For example, when you run the command kubectl get pods, it sends a request to the API server. The API server processes the request, checks permissions, and responds with the required information.
+
+BEFORE A REQUEST IS PROCESSED
+-----------------------------
+
+A request goes through three stages before it is accepted:
+
+1. Authentication  
+2. Authorization  
+3. Admission Control
+
+AUTHENTICATION
+--------------
+
+This stage answers: Who are you?
+
+To authenticate, the requester must present proof of identity. Kubernetes supports several methods:
+
+- X.509 client certificates (digitally signed)  
+- Static bearer tokens  
+- OAuth2 tokens  
+- External identity providers (e.g., Google, GitHub)
+
+Note: Kubernetes does not manage users internally. Users are created and managed outside of Kubernetes.
+
+Kubernetes does provide Service Accounts, which are identities used by applications or controllers running inside the cluster. These accounts allow pods to authenticate with the API server.
+
+AUTHORIZATION
+-------------
+
+This stage answers: What are you allowed to do?
+
+Once the requester is authenticated, Kubernetes uses Role-Based Access Control (RBAC) to determine permissions.
+
+RBAC involves:
+
+- Roles: Define what actions (read, write, delete) can be performed on what resources (pods, services, etc.)  
+- RoleBindings: Assign roles to users, groups, or service accounts
+
+Example: A user might be allowed to view pods but not delete them.
+
+ADMISSION CONTROL
+-----------------
+
+This is the final gate before the request is accepted.
+
+Even after authentication and authorization, admission controllers can inspect or modify the request.
+
+Common use cases for admission controllers:
+
+- Reject containers from untrusted registries  
+- Automatically add default labels or values  
+- Enforce policies like requiring resource limits for pods
+
+Tools like Open Policy Agent (OPA) can be used to define custom policies externally. Example: "Deny any container that runs as root."
+
+KUBERNETES API AS A REST INTERFACE
+----------------------------------
+
+The Kubernetes API is exposed as a RESTful interface over HTTPS.
+
+You can interact with it using HTTP methods:
+
+- GET – to read data (e.g., list pods)  
+- POST – to create resources  
+- PUT/PATCH – to update resources  
+- DELETE – to remove resources
+
+The API typically accepts and returns JSON.
+
+It can be accessed using:
+
+- kubectl (command-line tool)  
+- curl  
+- API client libraries (Go, Python, Java, etc.)
+
+WHAT YOU CAN DO THROUGH THE API
+-------------------------------
+
+Through the Kubernetes API, users and services can:
+
+- Create and manage resources (pods, deployments, services)  
+- Monitor resource status  
+- Update configurations  
+- Delete unused objects  
+- Scale applications  
+- Fetch logs from containers  
+- Execute commands inside pods
+
+All communication in Kubernetes goes through this API.
+
+SUMMARY
+-------
+
+- The Kubernetes API is the control center for all cluster operations.  
+- Requests go through authentication, authorization, and admission control stages.  
+- Authentication checks identity.  
+- Authorization checks permissions.  
+- Admission controllers enforce custom rules or modify requests.  
+- The API is RESTful, exposed over HTTPS, and supports JSON.  
+- All actions on Kubernetes resources happen through the API.

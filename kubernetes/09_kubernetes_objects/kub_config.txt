@@ -1,0 +1,101 @@
+KUBERNETES CONFIGURATION OBJECTS - SUMMARY
+==========================================
+
+1. TWELVE-FACTOR APP & CONFIGURATION
+------------------------------------
+- The Twelve-Factor App recommends **storing config in the environment**.
+- Configuration includes:
+  - Connection strings
+  - Service endpoints
+  - App settings
+- DO NOT hardcode configuration into images or code.
+
+Bad Practice:
+-------------
+- Embedding config into container images.
+- Requires rebuilding and redeploying on config changes.
+- Fails across environments (dev, staging, prod).
+
+Best Practice:
+--------------
+- Decouple configuration from the app code.
+- Use Kubernetes `ConfigMap` and `Secret` objects.
+
+2. CONFIGMAP
+------------
+- Stores non-sensitive data as key-value pairs or full config files.
+- Usage:
+  A. Mount as volume
+  B. Expose as environment variables
+
+Example ConfigMap (nginx.conf):
+-------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes 3;
+    error_log /var/log/nginx/error.log;
+    ...
+    server {
+        listen     80;
+        server_name _;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+    }
+
+Example Pod using ConfigMap:
+----------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.19
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /etc/nginx
+      name: nginx-conf
+  volumes:
+  - name: nginx-conf
+    configMap:
+      name: nginx-conf
+
+3. SECRETS
+----------
+- Similar to ConfigMaps, but store **sensitive data** (passwords, keys).
+- Secrets are **base64-encoded**, NOT encrypted.
+- Often debated: not truly “secure” by default.
+- Use external tools for better security (e.g., HashiCorp Vault).
+
+Key Differences: ConfigMap vs Secret
+------------------------------------
+| Feature       | ConfigMap         | Secret             |
+|---------------|-------------------|--------------------|
+| Use Case      | App config         | Sensitive data     |
+| Encoding      | Plaintext          | base64-encoded     |
+| Security      | Low                | Slightly better    |
+| Volume Mount  | Yes                | Yes                |
+| Env Variable  | Yes                | Yes                |
+
+4. SECRET MANAGEMENT TOOLS
+--------------------------
+- For better security, use:
+  - HashiCorp Vault
+  - AWS Secrets Manager
+  - Azure Key Vault
+  - Google Secret Manager
+
+- These tools offer:
+  - Encryption at rest
+  - Fine-grained access control
+  - Auditing and dynamic secrets
+

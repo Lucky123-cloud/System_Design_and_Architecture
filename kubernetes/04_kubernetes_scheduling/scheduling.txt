@@ -1,0 +1,53 @@
+KUBERNETES SCHEDULING
+=====================
+
+In basic terms, scheduling is a part of container orchestration. It refers to the process of automatically selecting the right worker node to run a containerized application.
+
+Before container orchestrators like Kubernetes, scheduling was a manual task. A system administrator had to decide which server to run an application on, based on available resources, location, and other server properties.
+
+In Kubernetes, scheduling is handled by a component called the kube-scheduler. The kube-scheduler does not run the application itself. It only decides which node the workload should run on.
+
+SCHEDULING PROCESS IN KUBERNETES
+================================
+
+1. A user creates a Pod object.
+2. Kubernetes, using a declarative model, defines the desired state (a Pod should be running).
+3. The kube-scheduler selects a node that meets the requirements.
+4. The kubelet (on the selected node) and the container runtime actually start the container.
+
+A key point is that the scheduler only makes decisions; it doesn’t run containers. It uses the information provided by the user about the application requirements, such as:
+
+- CPU requests
+- Memory requests
+- Node preferences (e.g., disk speed or labels)
+
+SCHEDULING DECISIONS
+=====================
+
+If a user provides specific requirements, the scheduler filters out nodes that do not meet them.
+
+If multiple nodes satisfy the conditions equally, Kubernetes will place the Pod on the node with the fewest running Pods. This is the default behavior when no special preferences are given.
+
+MISCONCEPTIONS
+==============
+
+Some people mistakenly think Kubernetes uses "artificial intelligence" to constantly monitor workloads and move Pods to the best nodes. This is incorrect.
+
+Kubernetes scheduling is driven by the information provided by the user. It does not automatically shift running Pods based on performance or type of workload unless tools like the Cluster Autoscaler or Vertical Pod Autoscaler are used.
+
+WHAT HAPPENS IF SCHEDULING FAILS?
+=================================
+
+If there is no node available that can meet the Pod's requirements (e.g., not enough memory or CPU), the Pod will remain unscheduled.
+
+The kube-scheduler continues retrying until it finds a node that fits or until resources become available.
+
+SUMMARY
+=======
+
+- Scheduling decides where a Pod runs, but not how it runs.
+- The kube-scheduler uses filters and scoring to choose the best node.
+- Users must provide resource requirements to help the scheduler.
+- Kubernetes does not move Pods around automatically based on workload.
+- If no suitable node is available, the scheduler will keep retrying.
+

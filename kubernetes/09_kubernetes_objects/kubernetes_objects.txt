@@ -1,0 +1,59 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. WORKLOAD OBJECTS IN KUBERNETES
+
+OVERVIEW
+--------
+Working with Pods alone is not reliable or scalable enough. If a Pod crashes or is lost (e.g., node failure), it disappears permanently. To maintain availability and scalability, Kubernetes provides controller objects that manage Pods automatically.
+
+COMMON WORKLOAD OBJECTS
+------------------------
+
+1. REPLICASET
+--------------
+- Ensures a specified number of identical Pods are running at all times.
+- Automatically replaces Pods if they fail.
+- Useful for scaling out applications.
+- Mostly managed by higher-level objects like Deployments.
+
+2. DEPLOYMENT
+--------------
+- The most commonly used and feature-rich controller.
+- Manages the full lifecycle of applications.
+- Handles updates by managing multiple ReplicaSets.
+- Ideal for stateless applications (like web servers).
+- Supports rolling updates and rollbacks.
+
+3. STATEFULSET
+---------------
+- Designed for stateful applications such as databases.
+- Provides each Pod with:
+  - A stable network identity,
+  - Persistent storage,
+  - Ordered startup/shutdown.
+- Useful when the identity and state of each Pod matters.
+
+4. DAEMONSET
+-------------
+- Ensures one Pod copy runs on each node in the cluster.
+- Ideal for cluster-wide tools like:
+  - Log collectors (e.g., Fluentd),
+  - Monitoring agents (e.g., Prometheus Node Exporter).
+
+5. JOB
+-------
+- Runs a Pod (or Pods) to completion (one-time task).
+- Suitable for:
+  - Database migrations,
+  - Admin scripts or batch processes.
+- Once the task finishes, the Pod is terminated.
+
+6. CRONJOB
+-----------
+- Schedules a Job to run periodically based on time.
+- Syntax similar to UNIX cron:
+  - Example: run a job every night at 4 AM.
+- Perfect for scheduled tasks like:
+  - Regular backups,
+  - Automated cleanups.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,127 @@
+KUBERNETES VOLUME & STORAGE OBJECTS - SUMMARY
+=============================================
+
+1. VOLUMES IN KUBERNETES
+------------------------
+- Containers alone do not support persistent storage.
+- Kubernetes provides Volumes as part of a Pod, not a container.
+- Use cases:
+  - Share data between containers in the same Pod.
+  - Retain data after Pod restarts (on the same node).
+  - Use sidecar patterns effectively.
+
+2. HOSTPATH VOLUME EXAMPLE
+---------------------------
+Example YAML:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - name: test-container
+    image: k8s.gcr.io/test-webserver
+    volumeMounts:
+    - mountPath: /test-pd
+      name: test-volume
+  volumes:
+  - name: test-volume
+    hostPath:
+      path: /data
+      type: Directory
+
+- Mounts a local directory from the host into the Pod.
+- Good for local dev or testing. Not recommended for production clusters.
+
+3. NEED FOR ADVANCED STORAGE
+----------------------------
+- Multi-node clusters need persistent storage that works across nodes.
+- Common storage options:
+  - AWS EBS
+  - GCP Persistent Disks
+  - Azure Disk
+  - Ceph, GlusterFS, NFS
+- Kubernetes uses CSI (Container Storage Interface) to abstract storage.
+
+4. STORAGE OBJECTS IN K8S
+--------------------------
+A. PersistentVolume (PV)
+   - Admin-defined storage slice
+   - Contains info: size, access mode, driver
+
+B. PersistentVolumeClaim (PVC)
+   - User-defined request for storage
+   - Kubernetes binds PVC to a matching PV
+
+C. Pod
+   - Uses PVC like any other volume
+
+5. COMPLETE EXAMPLE (AWS EBS + CSI)
+-----------------------------------
+# PersistentVolume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  csi:
+    driver: ebs.csi.aws.com
+    volumeHandle: vol-05786ec9ec9526b67
+
+# PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+
+# Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  containers:
+  - name: app
+    image: centos
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo $(date -u) >> /data/out.txt; sleep 5; done"]
+    volumeMounts:
+    - name: persistent-storage
+      mountPath: /data
+  volumes:
+  - name: persistent-storage
+    persistentVolumeClaim:
+      claimName: ebs-claim
+
+6. CONTAINER STORAGE INTERFACE (CSI)
+------------------------------------
+- Standard API for storage vendors.
+- Write once, use with any CSI-compatible platform.
+- Supports block and file storage.
+
+7. STORAGE ORCHESTRATION WITH ROOK
+----------------------------------
+- Rook is a Kubernetes operator that manages storage clusters like Ceph.
+- Enables fully cloud-native storage inside Kubernetes.
+
+8. USE CASES COMPARISON
+------------------------
+| Purpose                          | Use                       |
+|----------------------------------|----------------------------|
+| Share data in same Pod           | emptyDir / hostPath       |
+| Persist data after restart       | PV + PVC                  |
+| Cluster-wide storage             | CSI + PV/PVC + external   |
+| Sidecar logs / data access       | Pod-level volumes         |
+

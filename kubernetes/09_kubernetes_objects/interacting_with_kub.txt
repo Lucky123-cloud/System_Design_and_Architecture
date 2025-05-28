@@ -1,0 +1,134 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KUBERNETES CLI & TOOLING BASICS
+
+OVERVIEW
+--------
+To interact with a Kubernetes cluster, users typically use the CLI tool called kubectl.
+You can install kubectl from the official documentation.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LIST API RESOURCES
+
+COMMAND
+-------
+$ kubectl api-resources
+
+DESCRIPTION
+-----------
+Lists all available resource types in the cluster, their short names, API versions,
+whether they are namespaced, and their kind.
+
+EXAMPLE OUTPUT
+--------------
+NAME                    SHORTNAMES  APIVERSION  NAMESPACED  KIND
+configmaps              cm          v1          true        ConfigMap
+namespaces              ns          v1          false       Namespace
+nodes                   no          v1          false       Node
+persistentvolumeclaims  pvc         v1          true        PersistentVolumeClaim
+pods                    po          v1          true        Pod
+services                svc         v1          true        Service
+
+NOTES
+-----
+- SHORTNAMES help save typing time.
+- NAMESPACED indicates if the object exists within a namespace.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPLAIN A RESOURCE
+
+COMMAND
+-------
+$ kubectl explain <resource>
+
+EXAMPLE
+-------
+$ kubectl explain pod
+
+OUTPUT
+------
+KIND:     Pod
+VERSION:  v1
+
+DESCRIPTION:
+  Pod is a collection of containers that can run on a host.
+
+COMMAND (DEEPER INSIGHT)
+-------------------------
+$ kubectl explain pod.spec
+
+EXAMPLE FIELDS
+--------------
+- activeDeadlineSeconds <integer>
+  → Max duration the pod may run before being killed.
+
+- affinity <object>
+  → Pod's scheduling constraints.
+
+- automountServiceAccountToken <boolean>
+  → Auto-mount service account token into the pod.
+
+- containers <[]Object> (REQUIRED)
+  → List of containers to run in the pod.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HELP & BASIC COMMANDS
+
+COMMAND
+-------
+$ kubectl --help
+
+BASIC COMMANDS (BEGINNER)
+--------------------------
+- create: Create resources from a file or stdin.
+- expose: Expose a resource as a Kubernetes service.
+- run:    Run a specific container image in the cluster.
+- set:    Set values on Kubernetes objects.
+
+BASIC COMMANDS (INTERMEDIATE)
+------------------------------
+- explain: Documentation for resources.
+- get:     Display one or many resources.
+- edit:    Edit a resource directly on the server.
+- delete:  Delete resources by file, name, or selector.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CREATE OBJECTS FROM YAML
+
+COMMAND
+-------
+$ kubectl create -f <file>.yaml
+
+DESCRIPTION
+-----------
+Creates Kubernetes objects defined in the specified YAML file.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GRAPHICAL TOOLS FOR KUBERNETES
+
+DASHBOARDS & VISUAL TOOLS
+--------------------------
+- Kubernetes Dashboard (official web UI)
+- derailed/k9s (terminal UI)
+- Lens (desktop application)
+- VMware Tanzu Octant (extensible UI)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HELM - PACKAGE MANAGER FOR KUBERNETES
+
+OVERVIEW
+--------
+- Helm simplifies deployment and management of Kubernetes applications.
+- It packages resources as Charts.
+- Charts can be shared through registries.
+
+ADVANTAGES
+----------
+- Easier upgrades and version tracking.
+- Consistent and repeatable deployments.
+- Templates for multiple environments.
+
+GET STARTED
+-----------
+Browse charts on ArtifactHub: https://artifacthub.io/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

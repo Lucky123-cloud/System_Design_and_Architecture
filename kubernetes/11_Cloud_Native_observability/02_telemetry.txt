@@ -1,0 +1,44 @@
+TELEMETRY
+=========
+
+1. ORIGIN
+---------
+- From Greek: "tele" (remote/distance) + "metry" (measuring).
+- Means measuring and collecting data remotely and sending it to another system.
+
+2. EXAMPLE OUTSIDE IT
+---------------------
+- Weather stations measure temperature, humidity, wind speed.
+- Data is transmitted to a system for processing and display.
+
+3. TELEMETRY IN CONTAINER SYSTEMS
+---------------------------------
+- Every application should generate information data.
+- Data is collected and sent to a centralized system.
+- Telemetry data is divided into three main categories:
+
+4. THREE DATA CATEGORIES
+------------------------
+- LOGS:
+  - Messages emitted by applications for errors, warnings, or debug info.
+  - Example: task start and end messages.
+
+- METRICS:
+  - Quantitative measurements over time.
+  - Examples: number of requests, error rates.
+
+- TRACES:
+  - Track the lifecycle of a request through the system.
+  - Show when and how long each service took to process the request.
+
+5. CHALLENGE WITH TRADITIONAL SYSTEMS
+-------------------------------------
+- Logs and data often not centralized.
+- Viewing logs requires direct connection to systems.
+- Troubleshooting distributed systems with many services is time-consuming.
+
+6. BENEFITS OF TELEMETRY IN DISTRIBUTED SYSTEMS
+-----------------------------------------------
+- Centralized data collection.
+- Easier troubleshooting and monitoring.
+- Better insight into system behavior.

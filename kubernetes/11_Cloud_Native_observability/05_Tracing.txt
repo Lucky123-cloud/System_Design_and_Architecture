@@ -1,0 +1,45 @@
+==============================
+Tracing in Distributed Systems
+==============================
+
+Overview
+--------
+- Logging and monitoring (metrics) are well-known methods.
+- Distributed tracing is newer and essential for understanding request flows in microservices.
+- Metrics and logs provide insights into individual services.
+- Tracing shows how a request is processed across multiple services.
+
+What is a Trace?
+----------------
+- A trace tracks a request as it moves through services.
+- A trace consists of multiple spans.
+- Each span represents a unit of work or event during the request lifecycle.
+- A span includes:
+  - Start and finish time
+  - Name
+  - Tags (metadata)
+  - Log messages
+
+Tracing Systems
+---------------
+- Traces are collected and analyzed by tracing systems like Jaeger.
+
+Standardization and OpenTelemetry
+---------------------------------
+- Initially, there were competing standards: OpenTracing and OpenCensus.
+- In 2019, OpenTracing and OpenCensus merged into OpenTelemetry.
+- OpenTelemetry is now a CNCF project.
+- Provides APIs, SDKs, and tools to integrate telemetry data:
+  - Metrics
+  - Logs
+  - Traces (focus)
+- OpenTelemetry clients export data in a standardized format.
+- Data can be sent to platforms like Jaeger for storage and analysis.
+- Extensive tool support is available via the OpenTelemetry documentation.
+
+Summary
+-------
+Distributed tracing complements logs and metrics by providing end-to-end visibility 
+into how requests flow through distributed systems. OpenTelemetry enables consistent 
+collection and export of telemetry data across diverse environments.
+

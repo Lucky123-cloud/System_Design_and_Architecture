@@ -1,0 +1,49 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. POD LIFECYCLE IN KUBERNETES
+
+OVERVIEW
+--------
+Pods go through a defined lifecycle from creation to completion or failure. The state of a Pod helps describe what is happening with the containers inside.
+
+POD LIFECYCLE PHASES
+--------------------
+
+1. PENDING
+-----------
+- The Pod has been accepted by the Kubernetes cluster.
+- One or more of its containers are not yet ready to run.
+- This includes:
+  - Time spent waiting to be scheduled onto a Node.
+  - Time spent pulling container images.
+
+2. RUNNING
+-----------
+- The Pod has been assigned to a Node.
+- All containers have been created successfully.
+- At least one container is either:
+  - Actively running,
+  - Starting, or
+  - Restarting.
+
+3. SUCCEEDED
+-------------
+- All containers in the Pod have exited successfully (exit code 0).
+- No containers will be restarted.
+- The Pod has completed its job.
+
+4. FAILED
+----------
+- All containers have terminated.
+- At least one container has failed (non-zero exit code or killed).
+- The Pod is considered failed.
+
+5. UNKNOWN
+-----------
+- The Pod’s state cannot be determined.
+- Usually caused by issues in communication with the Node.
+
+NOTE
+----
+Kubernetes does not restart Pods by default. Instead, higher-level controllers like Deployments or ReplicaSets manage restarting or replacing Pods.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,43 @@
+CI/CD (CONTINUOUS INTEGRATION / CONTINUOUS DELIVERY)
+====================================================
+
+1. BACKGROUND
+-------------
+- Services are getting smaller; deployments more frequent.
+- Traditional deployments involved manual, error-prone steps.
+- DevOps emphasizes frequent and rapid deployments.
+- Automation is key to overcoming deployment challenges.
+
+2. CONTINUOUS INTEGRATION (CI)
+------------------------------
+- Permanent building and testing of code.
+- High automation using version control systems.
+- Allows multiple developers/teams to collaborate on code simultaneously.
+
+3. CONTINUOUS DELIVERY (CD)
+---------------------------
+- Automates deployment of pre-built software.
+- Often deploys first to Development or Staging environments.
+- Production deployment happens after thorough testing.
+
+4. CI/CD PIPELINES
+------------------
+- Scripted workflows automating build, test, deploy, and checks.
+- Runs on servers or containers.
+- Integrated tightly with version control.
+- Starts automatically on new code revisions.
+- Includes security and compliance checks.
+- Modern tools provide interaction and feedback (e.g., with Kubernetes).
+
+5. POPULAR CI/CD TOOLS
+----------------------
+- Spinnaker
+- GitLab
+- Jenkins
+- Jenkins X
+- Tekton CD
+- ArgoCD
+
+6. LEARNING RESOURCE
+--------------------
+- Recommended course: "Introduction to DevOps and Site Reliability Engineering (LFS162x)" on edX.

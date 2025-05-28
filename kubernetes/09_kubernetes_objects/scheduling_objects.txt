@@ -1,0 +1,101 @@
+KUBERNETES SCHEDULING OBJECTS - COMPLETE OVERVIEW
+================================================
+
+The Kubernetes Scheduler is the control process responsible for assigning Pods to Nodes. It follows these steps:
+- Determines which Nodes satisfy Pod constraints and have sufficient resources.
+- Ranks the valid Nodes based on suitability.
+- Binds the Pod to the most suitable Node.
+
+The default scheduler implementation is kube-scheduler.
+
+---
+
+Scheduling Control Methods:
+---------------------------
+
+1. nodeSelector
+---------------
+- The simplest and recommended way to constrain Pods to nodes.
+- Add the `nodeSelector` field in the Pod spec specifying node labels.
+- Pods will only be scheduled on nodes matching all specified labels.
+
+2. Affinity and Anti-Affinity
+------------------------------
+- More expressive constraints than `nodeSelector`.
+- Supports "soft" (preferred) and "hard" (required) rules.
+- Can specify Pods to prefer or avoid particular nodes or other Pods.
+- Enables advanced scheduling logic and flexibility.
+
+3. nodeName
+-----------
+- Directly assigns a Pod to a specific node by name.
+- If `nodeName` is set, the scheduler skips scheduling, and the kubelet on that node tries to run the Pod.
+- Overrides any `nodeSelector` or affinity/anti-affinity settings.
+
+4. Pod Topology Spread Constraints
+----------------------------------
+- Controls how Pods are distributed across failure domains like zones, regions, nodes, or custom topology.
+- Useful to improve availability, performance, and resource utilization.
+- Helps evenly spread Pods according to specified constraints.
+
+---
+
+Taints and Tolerations:
+------------------------
+
+- Node affinity attracts Pods to nodes.
+- Taints repel Pods from nodes.
+- Tolerations on Pods allow them to tolerate node taints and be scheduled there.
+
+Details:
+- Taints are applied to nodes with a key, value, and effect format:
+```
+
+key=value\:effect
+
+```
+- Effects:
+- NoSchedule: Pods that do not tolerate the taint will not be scheduled on the node.
+- PreferNoSchedule: Scheduler tries to avoid scheduling Pods without toleration but not guaranteed.
+- NoExecute: Pods without toleration will be evicted if already running on the node.
+
+Example taint command:
+```
+
+kubectl taint node worker region=useast2\:NoSchedule
+
+```
+
+Key and value rules:
+- Key must start with a letter or number, and can include letters, numbers, hyphens, dots, and underscores.
+- Max length: key 253 characters, value 63 characters.
+- Value is optional but must follow the same rules if given.
+
+Tolerations on PodSpec allow Pods to match node taints and be scheduled:
+Example toleration spec:
+```
+
+tolerations:
+
+* key: "region"
+  operator: "Equal"
+  value: "useast2"
+  effect: "NoSchedule"
+
+```
+
+- Pods with matching tolerations can be scheduled on nodes with those taints.
+- Taints and tolerations help ensure Pods avoid inappropriate nodes while allowing exceptions.
+
+---
+
+Summary:
+---------
+Kubernetes scheduling offers multiple mechanisms for controlling where Pods run:
+- Simple label-based constraints (`nodeSelector`).
+- Flexible affinity and anti-affinity rules.
+- Explicit node assignment (`nodeName`).
+- Spreading Pods evenly across failure domains (topology spread constraints).
+- Repelling and allowing Pods on nodes via taints and tolerations.
+
+This comprehensive scheduling model lets you finely tune Pod placement to meet your application’s availability, performance, and resource requirements.
